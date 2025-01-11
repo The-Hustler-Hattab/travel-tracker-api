@@ -1,22 +1,166 @@
+definitions:
+  gin.H:
+    additionalProperties: {}
+    type: object
+  models.TaxTravelTracker:
+    properties:
+      createdAt:
+        type: string
+      createdBy:
+        type: string
+      estimatedTaxDeductions:
+        type: integer
+      id:
+        type: integer
+      travelDistance:
+        type: integer
+      travelFrom:
+        type: string
+      travelTime:
+        type: string
+      travelTo:
+        type: string
+    type: object
 info:
   contact:
-    email: support@example.com
-    name: API Support
-    url: http://example.com/support
-  description: This is a sample API documentation.
-  termsOfService: http://example.com/terms/
-  title: My API
+    email: mohammedhattab97@gmail.com
+    name: Mohammed Hattab
+    url: mtahatb.com
+  description: This is API will be used to track travel for users for the purposes
+    of tax savings.
+  title: Travel Tracker API
   version: "1.0"
 paths:
-  /ping:
+  /health-check:
     get:
-      description: Check API status
+      description: Responds with a simple JSON message indicating the service status
+      produces:
+      - application/json
       responses:
         "200":
-          description: pong
+          description: OK
           schema:
-            type: string
-      summary: Ping
+            additionalProperties:
+              type: string
+            type: object
+      summary: Health Check
       tags:
-      - health
+      - HealthCheck
+  /travel-tracker:
+    post:
+      consumes:
+      - application/json
+      description: Add a new record to the travel tracker
+      parameters:
+      - description: Travel Record
+        in: body
+        name: record
+        required: true
+        schema:
+          $ref: '#/definitions/models.TaxTravelTracker'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.TaxTravelTracker'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create a new travel record
+      tags:
+      - TravelTracker
+  /travel-tracker/{id}:
+    delete:
+      description: Remove a record from the travel tracker
+      parameters:
+      - description: Travel Record ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      responses:
+        "204":
+          description: No Content
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Delete a travel record
+      tags:
+      - TravelTracker
+    get:
+      description: Fetch a single travel record using its ID
+      parameters:
+      - description: Travel Record ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TaxTravelTracker'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get a travel record by ID
+      tags:
+      - TravelTracker
+    put:
+      consumes:
+      - application/json
+      description: Modify an existing record in the travel tracker
+      parameters:
+      - description: Travel Record ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Updated Travel Record
+        in: body
+        name: record
+        required: true
+        schema:
+          $ref: '#/definitions/models.TaxTravelTracker'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.TaxTravelTracker'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Update an existing travel record
+      tags:
+      - TravelTracker
 swagger: "2.0"

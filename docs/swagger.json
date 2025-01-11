@@ -1,31 +1,248 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "This is a sample API documentation.",
-        "title": "My API",
-        "termsOfService": "http://example.com/terms/",
+        "description": "This is API will be used to track travel for users for the purposes of tax savings.",
+        "title": "Travel Tracker API",
         "contact": {
-            "name": "API Support",
-            "url": "http://example.com/support",
-            "email": "support@example.com"
+            "name": "Mohammed Hattab",
+            "url": "mtahatb.com",
+            "email": "mohammedhattab97@gmail.com"
         },
         "version": "1.0"
     },
     "paths": {
-        "/ping": {
+        "/health-check": {
             "get": {
-                "description": "Check API status",
-                "tags": [
-                    "health"
+                "description": "Responds with a simple JSON message indicating the service status",
+                "produces": [
+                    "application/json"
                 ],
-                "summary": "Ping",
+                "tags": [
+                    "HealthCheck"
+                ],
+                "summary": "Health Check",
                 "responses": {
                     "200": {
-                        "description": "pong",
+                        "description": "OK",
                         "schema": {
-                            "type": "string"
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
                         }
                     }
+                }
+            }
+        },
+        "/travel-tracker": {
+            "post": {
+                "description": "Add a new record to the travel tracker",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TravelTracker"
+                ],
+                "summary": "Create a new travel record",
+                "parameters": [
+                    {
+                        "description": "Travel Record",
+                        "name": "record",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.TaxTravelTracker"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/models.TaxTravelTracker"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/travel-tracker/{id}": {
+            "get": {
+                "description": "Fetch a single travel record using its ID",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TravelTracker"
+                ],
+                "summary": "Get a travel record by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Travel Record ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.TaxTravelTracker"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Modify an existing record in the travel tracker",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TravelTracker"
+                ],
+                "summary": "Update an existing travel record",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Travel Record ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Updated Travel Record",
+                        "name": "record",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.TaxTravelTracker"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.TaxTravelTracker"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Remove a record from the travel tracker",
+                "tags": [
+                    "TravelTracker"
+                ],
+                "summary": "Delete a travel record",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Travel Record ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "gin.H": {
+            "type": "object",
+            "additionalProperties": {}
+        },
+        "models.TaxTravelTracker": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "createdBy": {
+                    "type": "string"
+                },
+                "estimatedTaxDeductions": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "travelDistance": {
+                    "type": "integer"
+                },
+                "travelFrom": {
+                    "type": "string"
+                },
+                "travelTime": {
+                    "type": "string"
+                },
+                "travelTo": {
+                    "type": "string"
                 }
             }
         }

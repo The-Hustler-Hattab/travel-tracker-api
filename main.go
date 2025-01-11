@@ -9,14 +9,12 @@ _ "tax-travel-tracker/docs"
 
 
 ) 
-// @title           My API
+// @title           Travel Tracker API
 // @version         1.0
-// @description     This is a sample API documentation.
-// @termsOfService  http://example.com/terms/
-
-// @contact.name   API Support
-// @contact.url    http://example.com/support
-// @contact.email  support@example.com
+// @description     This is API will be used to track travel for users for the purposes of tax savings.
+// @contact.name   Mohammed Hattab
+// @contact.url    mtahatb.com
+// @contact.email  mohammedhattab97@gmail.com
 func main() {
 	log := logrus.New()
 	log.SetLevel(logrus.InfoLevel)
@@ -26,6 +24,10 @@ func main() {
 	loadEnvironmentVariables(log)
 
 	initializeDatabase(log)
+
+
+	
+
 
 
 	router := routes.SetupRouter()
