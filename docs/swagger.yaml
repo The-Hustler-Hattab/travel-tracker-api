@@ -1,0 +1,22 @@
+info:
+  contact:
+    email: support@example.com
+    name: API Support
+    url: http://example.com/support
+  description: This is a sample API documentation.
+  termsOfService: http://example.com/terms/
+  title: My API
+  version: "1.0"
+paths:
+  /ping:
+    get:
+      description: Check API status
+      responses:
+        "200":
+          description: pong
+          schema:
+            type: string
+      summary: Ping
+      tags:
+      - health
+swagger: "2.0"
