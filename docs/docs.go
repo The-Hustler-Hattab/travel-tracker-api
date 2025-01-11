@@ -43,6 +43,33 @@ const docTemplate = `{
             }
         },
         "/travel-tracker": {
+            "get": {
+                "description": "Retrieve all records from the travel tracker",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "TravelTracker"
+                ],
+                "summary": "Get all travel records",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.TaxTravelTracker"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            },
             "post": {
                 "description": "Add a new record to the travel tracker",
                 "consumes": [

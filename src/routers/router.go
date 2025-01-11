@@ -25,6 +25,8 @@ func SetupRouter() *gin.Engine {
 		travelGroup.GET("/:id", handlers.GetTravelRecordHandler)
 		travelGroup.PUT("/:id", handlers.UpdateTravelRecordHandler)
 		travelGroup.DELETE("/:id", handlers.DeleteTravelRecordHandler)
+		travelGroup.GET("", handlers.GetAllTravelRecordsHandler)
+
 	}
 
 

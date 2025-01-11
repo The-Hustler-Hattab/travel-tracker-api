@@ -22,6 +22,13 @@ func GetTravelRecordByID(id int) (*models.TaxTravelTracker, error) {
 	}
 	return &record, nil
 }
+func GetAllTravelRecords() ([]models.TaxTravelTracker, error) {
+	var records []models.TaxTravelTracker
+	if err := db.DB.Find(&records).Error; err != nil {
+		return nil, err
+	}
+	return records, nil
+}
 
 func UpdateTravelRecord(record *models.TaxTravelTracker) error {
 	// Create a map of fields that are allowed to be updated

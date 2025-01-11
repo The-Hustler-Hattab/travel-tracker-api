@@ -130,3 +130,22 @@ func DeleteTravelRecordHandler(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"message": "Record deleted"})
 }
+
+
+// GetAllTravelRecordsHandler godoc
+// @Summary Get all travel records
+// @Description Retrieve all records from the travel tracker
+// @Tags TravelTracker
+// @Produce json
+// @Success 200 {array} models.TaxTravelTracker
+// @Failure 500 {object} gin.H
+// @Router /travel-tracker [get]
+func GetAllTravelRecordsHandler(c *gin.Context) {
+	records, err := repository.GetAllTravelRecords()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve records"})
+		return
+	}
+
+	c.JSON(http.StatusOK, records)
+}
