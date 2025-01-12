@@ -4,9 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"tax-travel-tracker/src/db/models"
 	"time"
-
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -22,11 +20,6 @@ func InitDB() error {
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	if err != nil {
 		return fmt.Errorf("error opening database: %v", err)
-	}
-
-	// Auto-migrate the schema
-	if err := DB.AutoMigrate(&models.TaxTravelTracker{}); err != nil {
-		return fmt.Errorf("error during auto-migration: %v", err)
 	}
 
 	
@@ -45,6 +38,6 @@ func InitDB() error {
 	// Set the maximum lifetime of a connection
 	sqlDB.SetConnMaxLifetime(time.Minute * 5)
 
-	log.Println("Database connected and schema migrated successfully!")
+	log.Println("Database connected successfully!")
 	return nil
 }
