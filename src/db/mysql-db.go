@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"tax-travel-tracker/src/db/models"
+	"time"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -27,6 +28,22 @@ func InitDB() error {
 	if err := DB.AutoMigrate(&models.TaxTravelTracker{}); err != nil {
 		return fmt.Errorf("error during auto-migration: %v", err)
 	}
+
+	
+	// Retrieve the underlying sql.DB to configure the connection pool
+	sqlDB, err := DB.DB()
+	if err != nil {
+		return fmt.Errorf("error retrieving database instance: %v", err)
+	}
+
+	// Set the maximum number of idle connections in the pool
+	sqlDB.SetMaxIdleConns(5)
+
+	// Set the maximum number of open connections to the database
+	sqlDB.SetMaxOpenConns(10)
+
+	// Set the maximum lifetime of a connection
+	sqlDB.SetConnMaxLifetime(time.Minute * 5)
 
 	log.Println("Database connected and schema migrated successfully!")
 	return nil

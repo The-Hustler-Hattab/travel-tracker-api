@@ -20,18 +20,11 @@ func main() {
 	log.SetLevel(logrus.InfoLevel)
 	log.Info("Starting the application...")
 
-
 	loadEnvironmentVariables(log)
-
 	initializeDatabase(log)
 
-
-	
-
-
-
 	router := routes.SetupRouter()
-	router.Run(":8090")
+	router.Run(":5000")
 
 
 
