@@ -23,7 +23,9 @@ func InitVerifier()  {
 	// Prefetch the JWKs and cache them
 	_, err:= verifier.VerifyIdToken(os.Getenv("DUMMY_JWT"))
 
-	fmt.Println(err)
+	if err != nil {
+		fmt.Println("error: " + err.Error())
+	}
 
 	JwtVerifier = verifier
 

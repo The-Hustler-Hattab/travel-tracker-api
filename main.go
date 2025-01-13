@@ -26,7 +26,7 @@ func main() {
 
 	loadEnvironmentVariables(log)
 
-	 setupAuthAndDB(log)
+	setupAuthAndDB(log)
 
 
 	router := routes.SetupRouter()
