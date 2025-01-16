@@ -33,11 +33,13 @@ func GetAllTravelRecords() ([]models.TaxTravelTracker, error) {
 func UpdateTravelRecord(record *models.TaxTravelTracker) error {
 	// Create a map of fields that are allowed to be updated
 	allowedUpdates := map[string]interface{}{
-		"travel_time":             record.TravelTime,
-		"travel_from":             record.TravelFrom,
-		"travel_to":               record.TravelTo,
-		"travel_distance":         record.TravelDistance,
-		"estimated_tax_deductions": record.EstimatedTaxDeductions,
+		"Travel_time":             record.TravelTime,
+		"Travel_from":             record.TravelFrom,
+		"Travel_to":               record.TravelTo,
+		"Travel_distance":         record.TravelDistance,
+		"Estimated_tax_deductions": record.EstimatedTaxDeductions,
+		"Comment": record.Comment,
+
 	}
 
 	// Perform a scoped update to prevent modifications to restricted fields

@@ -1,3 +1,7 @@
+# re create the Swagger docs
+swag init --parseDependency --parseInternal
+
+
 # Deploy the app to GCP Cloud Run
 docker build -t travel-tracker-api:latest .
 

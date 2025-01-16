@@ -6,9 +6,7 @@ import (
 	"tax-travel-tracker/src/routers"
 	"tax-travel-tracker/src/routers/auth"
 	"time"
-
     "sync"
-
 	"github.com/joho/godotenv"
 	"github.com/sirupsen/logrus"
 )

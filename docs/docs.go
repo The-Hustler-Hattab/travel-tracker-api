@@ -42,6 +42,82 @@ const docTemplate = `{
                 }
             }
         },
+        "/mileage": {
+            "get": {
+                "description": "Get a list of all mileage records.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Mileage"
+                ],
+                "summary": "Retrieve all mileage records",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.IrsStandardMileageRate"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
+        "/mileage/{id}": {
+            "get": {
+                "description": "Get a mileage record by its unique ID.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Mileage"
+                ],
+                "summary": "Retrieve mileage record",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Mileage Record ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.IrsStandardMileageRate"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {
+                            "$ref": "#/definitions/gin.H"
+                        }
+                    }
+                }
+            }
+        },
         "/travel-tracker": {
             "get": {
                 "description": "Retrieve all records from the travel tracker",
@@ -252,9 +328,23 @@ const docTemplate = `{
             "type": "object",
             "additionalProperties": {}
         },
+        "models.IrsStandardMileageRate": {
+            "type": "object",
+            "properties": {
+                "centsPerMile": {
+                    "type": "integer"
+                },
+                "year": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.TaxTravelTracker": {
             "type": "object",
             "properties": {
+                "comment": {
+                    "type": "string"
+                },
                 "createdAt": {
                     "type": "string"
                 },
@@ -262,13 +352,13 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "estimatedTaxDeductions": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "id": {
                     "type": "integer"
                 },
                 "travelDistance": {
-                    "type": "integer"
+                    "type": "number"
                 },
                 "travelFrom": {
                     "type": "string"
