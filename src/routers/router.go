@@ -2,7 +2,7 @@ package routes
 
 import (
 	"tax-travel-tracker/src/handlers"
-	_"tax-travel-tracker/src/handlers/middleware"
+	"tax-travel-tracker/src/handlers/middleware"
 
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
@@ -21,7 +21,7 @@ func SetupRouter() *gin.Engine {
 
     	// Travel Tracker API routes
 	travelGroup := router.Group("/travel-tracker")
-	// travelGroup.Use(middleware.AuthMiddleware())
+	travelGroup.Use(middleware.AuthMiddleware())
 	{
 		travelGroup.POST("", handlers.CreateTravelRecordHandler)
 		travelGroup.GET("/:id", handlers.GetTravelRecordHandler)
@@ -32,7 +32,7 @@ func SetupRouter() *gin.Engine {
 	}
 
 	milageGroup := router.Group("/mileage")
-	// milageGroup.Use(middleware.AuthMiddleware())
+	milageGroup.Use(middleware.AuthMiddleware())
 	{
 		milageGroup.GET("/:id", handlers.GetMilageRecordHandler)
 		milageGroup.GET("", handlers.GetAllMileageRecordsHandler)
@@ -40,7 +40,7 @@ func SetupRouter() *gin.Engine {
 	}
 
 	apiGroup := router.Group("/api-key")
-	// apiGroup.Use(middleware.AuthMiddleware())
+	apiGroup.Use(middleware.AuthMiddleware())
 	{
 		apiGroup.GET("", handlers.ApiKeyHandler)
 	}
