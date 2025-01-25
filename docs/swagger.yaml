@@ -40,6 +40,21 @@ info:
   title: Travel Tracker API
   version: "1.0"
 paths:
+  /api-key:
+    get:
+      description: Responds with a simple JSON message that has the api key
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get API Key
+      tags:
+      - ApiKey
   /health-check:
     get:
       description: Responds with a simple JSON message indicating the service status

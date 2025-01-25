@@ -2,8 +2,6 @@ package handlers
 
 import (
 	"net/http"
-	_ "tax-travel-tracker/docs"
-
 	"github.com/gin-gonic/gin"
 )
 

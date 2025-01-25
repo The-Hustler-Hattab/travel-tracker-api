@@ -32,11 +32,17 @@ func SetupRouter() *gin.Engine {
 	}
 
 	milageGroup := router.Group("/mileage")
-	// travelGroup.Use(middleware.AuthMiddleware())
+	// milageGroup.Use(middleware.AuthMiddleware())
 	{
 		milageGroup.GET("/:id", handlers.GetMilageRecordHandler)
 		milageGroup.GET("", handlers.GetAllMileageRecordsHandler)
 
+	}
+
+	apiGroup := router.Group("/api-key")
+	// apiGroup.Use(middleware.AuthMiddleware())
+	{
+		apiGroup.GET("", handlers.ApiKeyHandler)
 	}
 
 

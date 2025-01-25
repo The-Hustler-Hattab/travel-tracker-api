@@ -19,6 +19,29 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/api-key": {
+            "get": {
+                "description": "Responds with a simple JSON message that has the api key",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "ApiKey"
+                ],
+                "summary": "Get API Key",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "object",
+                            "additionalProperties": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/health-check": {
             "get": {
                 "description": "Responds with a simple JSON message indicating the service status",
