@@ -3,8 +3,11 @@ package handlers
 import (
 	"net/http"
 	"strconv"
+	"strings"
 	"tax-travel-tracker/src/db/models"
 	"tax-travel-tracker/src/db/repository"
+
+	"tax-travel-tracker/src/util"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,6 +28,34 @@ func CreateTravelRecordHandler(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+
+	// Retrieve the Authorization header
+	authHeader := c.GetHeader("Authorization")
+	if authHeader == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header is missing"})
+		return
+	}
+
+	// Extract the token from the header (assuming 'Bearer {token}')
+	parts := strings.Split(authHeader, " ")
+	if len(parts) != 2 || parts[0] != "Bearer" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization header format must be Bearer {token}"})
+		return
+	}
+	tokenString := parts[1]
+
+	// Extract email from the token
+	email, err := util.GetEmailFromToken(tokenString)
+	if err != nil {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
+		return
+	}
+	
+	record.CreatedBy = email
+
+
+
 
 	if err := repository.CreateTravelRecord(&record); err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create record"})
