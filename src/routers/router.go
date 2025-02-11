@@ -45,6 +45,11 @@ func SetupRouter() *gin.Engine {
 		apiGroup.GET("", handlers.ApiKeyHandler)
 	}
 
+	userGroup := router.Group("/users")
+	{
+		userGroup.POST("", handlers.CreateUserHandler)
+	}
+
 
 
 	return router

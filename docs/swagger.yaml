@@ -30,6 +30,15 @@ definitions:
       travelTo:
         type: string
     type: object
+  models.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      password:
+        type: string
+    type: object
 info:
   contact:
     email: mohammedhattab97@gmail.com
@@ -255,4 +264,34 @@ paths:
       summary: Update an existing travel record
       tags:
       - TravelTracker
+  /users:
+    post:
+      consumes:
+      - application/json
+      description: Add a new user record to the users table
+      parameters:
+      - description: User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create a new user
+      tags:
+      - Users
 swagger: "2.0"
